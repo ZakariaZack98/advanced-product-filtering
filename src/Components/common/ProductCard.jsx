@@ -16,7 +16,7 @@ const ProductCard = ({
   
   return (
     <div
-      className="w-[24%] p-2 rounded-md bg-white dark:bg-gray-700 dark:text-lightPink font-dmSans mx-auto shadow-xl cursor-pointer"
+      className="w-[24%] max-h-118 p-2 rounded-md bg-white dark:bg-gray-700 dark:text-lightPink font-dmSans shadow-xl cursor-pointer"
       onClick={(e) => {
         e.stopPropagation();
         

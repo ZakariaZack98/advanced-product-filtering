@@ -1,11 +1,13 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ProductCard from '../../Components/common/ProductCard'
 import FilterSec from '../../Components/ShopComponents/FilterSec'
 import { ProductDataContext } from '../../contexts/ProductDataContext'
+import { UserFilterContext } from '../../contexts/UserFilterContext'
 
 const Shop = () => {
   const {productData} = useContext(ProductDataContext);
-  const [filteredData, setFilteredData] = useState(productData);
+  const [filteredData, setFilteredData] = useState([]);
+  const {userFilter} = useContext(UserFilterContext);
 
   const filterParams = [
     {
@@ -35,6 +37,22 @@ const Shop = () => {
     },
   ]
 
+  useEffect(() => {
+    if (productData.length === 0) return; 
+
+    const updatedFilteredData = productData.filter(data => {
+      return Object.keys(userFilter).every(key => {
+        if (userFilter[key].length === 0) return true;
+        return userFilter[key].includes(data[key]);
+      });
+    });
+    setFilteredData(updatedFilteredData);
+  }, [userFilter, productData]);
+
+  useEffect(() => {
+    setFilteredData(productData); 
+  }, [productData]);
+
   return (
     <div className='font-roboto'>
       <div className="headingPart py-3">
@@ -47,9 +65,21 @@ const Shop = () => {
             filterParams?.map(item => <FilterSec key={item.filterProp} filterparamsArr={item.params} filterBy={item.filter} filterProp={item.filterProp}/>)
           }
         </div>
-        <div className="productGrid w-[83dvw] flex flex-wrap justify-between gap-3">
+        <div className="productGrid w-full flex flex-wrap justify-start items-start gap-3">
           {
-            productData?.map(product => <ProductCard key={product.pid} pid={product.pid} name={product.name} imgUrl={product.imgUrl} VRAM={product.VRAM} memoryType={product.memoryType} chipsetManufacturer={product.chipSetManufacturer} retailPrice={product.retailPrice} offerPrice={product.offerPrice}/>)
+            filteredData?.map(product => (
+              <ProductCard
+                key={product.pid}
+                pid={product.pid}
+                name={product.name}
+                imgUrl={product.imgUrl}
+                VRAM={product.VRAM}
+                memoryType={product.memoryType}
+                chipsetManufacturer={product.chipSetManufacturer}
+                retailPrice={product.retailPrice}
+                offerPrice={product.offerPrice}
+              />
+            ))
           }
         </div>
       </div>
