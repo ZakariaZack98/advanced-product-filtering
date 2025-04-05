@@ -60,7 +60,7 @@ const Shop = () => {
       <Heading/>
       <SortBar filteredData={filteredData} setFilteredData={setFilteredData}/>
       <div className="flex justify-between items-stretch gap-x-3 bg-gray-300 p-2">
-        <FilterSidebar filterParams={filterParams}/>
+        <FilterSidebar filterParams={filterParams} filteredData={filteredData} setFilteredData={setFilteredData}/>
         <div className="productGrid w-full flex flex-wrap justify-start items-start gap-3">
           {
             filteredData?.map(product => (
