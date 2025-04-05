@@ -32,7 +32,7 @@ const ProductCard = ({
         <h3 className="text-sm font-semibold max-h-25px">{name}</h3>
         <div className="featureSec text-[13px] opacity-60">
           <ul className=" list-disc ms-3">
-            <li>VRAM: {VRAM}</li>
+            <li>VRAM: {VRAM}GB</li>
             <li>Memory Type: {memoryType}</li>
             <li>Chipset: {chipsetManufacturer}</li>
             <li>3 Years Warrantee</li>

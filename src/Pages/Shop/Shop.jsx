@@ -7,6 +7,29 @@ const Shop = () => {
   const {productData} = useContext(ProductDataContext);
   const [filteredData, setFilteredData] = useState(productData);
 
+  const filterParams = [
+    {
+      filter: 'Chipset',
+      params: Array.from(new Set([...productData.map(product => product.chipSetManufacturer)])),
+    },
+    {
+      filter: 'Brands',
+      params: Array.from(new Set([...productData.map(product => product.brand)])),
+    },
+    {
+      filter: 'VRAM Capacity',
+      params: Array.from(new Set([...productData.map(product => product.VRAM)])).sort((a, b) => a - b),
+    },
+    {
+      filter: 'Memory Type',
+      params: Array.from(new Set([...productData.map(product => product.memoryType)])),
+    },
+    {
+      filter: 'Fan Count',
+      params: Array.from(new Set([...productData.map(product => product.fanCount)])).sort((a, b) => a - b),
+    },
+  ]
+
   return (
     <div className='font-roboto'>
       <div className="headingPart py-3">
@@ -14,12 +37,14 @@ const Shop = () => {
         <p className='text-sm py-2'>Smartphone price in Bangladesh 2025 | Gadget Land  begins at T 5,800৳ and can go up to T 320,000৳ depending on the brand and specifications With a variety of 643 items available at Gadget Land, where 283 items are in stock now & 321 items offer you the best discount price in . Find the perfect Smartphone Components for your requirements. Search for Smartphone, best Smartphone, external Smartphone, laptop Smartphone, best Smartphone for gaming, gaming Smartphone, pci video card, Smartphone for pc, pc Smartphone, good Smartphone, pc video card, video card for pc, to learn more about our products and services. </p>
       </div>
       <div className="flex justify-between items-stretch gap-x-3 bg-gray-300 p-2">
-        <div className="filters w-[17dvw] ">
-          <FilterSec/>
+        <div className="filters w-[17dvw] flex flex-col gap-y-3">
+          {
+            filterParams?.map(item => <FilterSec key={item.filter} filterparamsArr={item.params} filterBy={item.filter}/>)
+          }
         </div>
         <div className="productGrid w-[83dvw] flex flex-wrap justify-between gap-3">
           {
-            filteredData?.map(product => <ProductCard pid={product.pid} name={product.name} imgUrl={product.imgUrl} VRAM={product.VRAM} memoryType={product.memoryType} chipsetManufacturer={product.chipsetManufacturer} retailPrice={product.retailPrice} offerPrice={product.offerPrice}/>)
+            productData?.map(product => <ProductCard key={product.pid} pid={product.pid} name={product.name} imgUrl={product.imgUrl} VRAM={product.VRAM} memoryType={product.memoryType} chipsetManufacturer={product.chipSetManufacturer} retailPrice={product.retailPrice} offerPrice={product.offerPrice}/>)
           }
         </div>
       </div>

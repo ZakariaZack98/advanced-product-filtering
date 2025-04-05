@@ -1,10 +1,10 @@
 import React from 'react'
 
-const FilterOpt = ({name, changeHandler}) => {
+const FilterOpt = ({param, changeHandler}) => {
   return (
-    <div className='flex gap-2'>
-      <input type="checkbox" id={name} name={name} onChange={e => changeHandler(e)}/>
-      <label htmlFor={name} className='font-sm'>{name}</label>
+    <div className='flex gap-x-2'>
+      <input type="checkbox" id={param} param={param} onChange={e => changeHandler(e)}/>
+      <label htmlFor={param} className='font-sm'>{param}</label>
     </div>
   )
 }
