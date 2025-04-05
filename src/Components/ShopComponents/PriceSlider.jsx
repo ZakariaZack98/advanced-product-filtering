@@ -1,48 +1,59 @@
-import React, { useState } from 'react';
+//! THIS SLIDER NEEDS TO BE MADE DYNAMIC, RECiEVE RANGE FROM FILTERED DATA
 
-const PriceSlider = ({filteredData, setFilteredData}) => {
-  const [minValue, setMinValue] = useState(129); // Initial minimum value
-  const [maxValue, setMaxValue] = useState(1899); // Initial maximum value
-  const minRange = 129; // Minimum range value
-  const maxRange = 1899; // Maximum range value
+import React, { useState, useContext } from 'react';
+import { ProductDataContext } from '../../contexts/ProductDataContext';
 
-  const updateFilteredData = () => {
-    const clonedFilteredData = [...filteredData];
-    const updatedFilteredData = clonedFilteredData.filter(data => data.offerPrice >= minValue && data.offerPrice <= maxValue);
-    setFilteredData(updatedFilteredData)
-  }
+const PriceSlider = ({ filteredData, setFilteredData }) => {
+  const [minValue, setMinValue] = useState(129); 
+  const [maxValue, setMaxValue] = useState(1899); 
+  const maxRange = 1899; 
+  const {productData} = useContext(ProductDataContext);
+
+  const updateFilteredData = (newMinValue, newMaxValue) => {
+    const updatedFilteredData = productData.filter(
+      (data) => data.offerPrice >= newMinValue && data.offerPrice <= newMaxValue
+    );
+    console.log(newMinValue, maxValue, updatedFilteredData.length)
+    setFilteredData(updatedFilteredData);
+  };
 
   const handleMinChange = (e) => {
-    const value = Math.min(Number(e.target.value), maxValue - 1); // Ensure minValue is less than maxValue
-    setMinValue(value);
-    updateFilteredData()
+    const value = Number(e.target.value);
+    if (value < maxValue) {
+      setMinValue(value); 
+    }
+    updateFilteredData(value, maxValue); 
   };
 
   const handleMaxChange = (e) => {
-    const value = Math.max(Number(e.target.value), minValue + 1); // Ensure maxValue is greater than minValue
-    setMaxValue(value);
-    updateFilteredData();
+    const value = Number(e.target.value);
+    if (value > minValue) {
+      setMaxValue(value); 
+    }
+    updateFilteredData(minValue, value); 
   };
 
   const handleMinInputBlur = (e) => {
-    const value = Math.max(minRange, Math.min(Number(e.target.value), maxValue - 1)); // Ensure value is within range
+    const value = Math.max(minRange, Math.min(Number(e.target.value), maxValue - 1)); 
     setMinValue(value);
+    updateFilteredData(value, maxValue); 
   };
 
   const handleMaxInputBlur = (e) => {
-    const value = Math.min(maxRange, Math.max(Number(e.target.value), minValue + 1)); // Ensure value is within range
+    const value = Math.min(maxRange, Math.max(Number(e.target.value), minValue + 1)); 
     setMaxValue(value);
+    updateFilteredData(minValue, value); 
   };
 
   return (
     <div className="bg-white rounded-md p-2 price-slider w-full flex flex-col items-center">
-      <h4 className='w-full text-start text-gray-400 font-semibold mb-5 '>Price</h4>
+      <h4 className="w-full text-start text-gray-400 font-semibold mb-5">Price</h4>
       <div className="relative w-full h-2">
         <div
           className="absolute h-2 bg-blue-500 rounded-lg pointer-events-none"
           style={{
-            left: `${(minValue / maxRange) * 100}%`,
-            right: `${100 - (maxValue / maxRange) * 100}%`,
+            left: `${((minValue - minRange) / (maxRange - minRange)) * 100}%`,
+            right: `${100 - ((maxValue - minRange) / (maxRange - minRange)) * 100}%`,
           }}
         ></div>
 
@@ -75,20 +86,20 @@ const PriceSlider = ({filteredData, setFilteredData}) => {
         />
       </div>
 
-      {/* Display Min and Max Values as Input Fields */}
+      
       <div className="flex justify-between w-full mt-4 text-sm text-gray-700">
         <input
           type="number"
           value={minValue}
-          onChange={(e) => setMinValue(Number(e.target.value))} // Allow temporary input
-          onBlur={handleMinInputBlur} // Validate on blur
+          onChange={(e) => setMinValue(Number(e.target.value))} 
+          onBlur={handleMinInputBlur} 
           className="w-20 p-1 border border-gray-300 rounded"
         />
         <input
           type="number"
           value={maxValue}
-          onChange={(e) => setMaxValue(Number(e.target.value))} // Allow temporary input
-          onBlur={handleMaxInputBlur} // Validate on blur
+          onChange={(e) => setMaxValue(Number(e.target.value))} 
+          onBlur={handleMaxInputBlur} 
           className="w-20 p-1 border border-gray-300 rounded"
         />
       </div>
