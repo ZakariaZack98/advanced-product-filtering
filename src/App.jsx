@@ -3,17 +3,20 @@ import Shop from "./Pages/Shop/Shop";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CommonLayout from "./Components/CommonLayout";
 import { ProductDataProvider } from "./contexts/ProductDataContext";
+import { UserFilterProvider } from "./contexts/UserFilterContext";
 
 const App = () => {
   return (
     <ProductDataProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<CommonLayout />}>
-            <Route index element={<Shop />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <UserFilterProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<CommonLayout />}>
+              <Route index element={<Shop />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </UserFilterProvider>
     </ProductDataProvider>
   );
 };

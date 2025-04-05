@@ -10,22 +10,27 @@ const Shop = () => {
   const filterParams = [
     {
       filter: 'Chipset',
+      filterProp: 'chipSetManufacturer',
       params: Array.from(new Set([...productData.map(product => product.chipSetManufacturer)])),
     },
     {
       filter: 'Brands',
+      filterProp: 'brand',
       params: Array.from(new Set([...productData.map(product => product.brand)])),
     },
     {
       filter: 'VRAM Capacity',
+      filterProp: 'VRAM',
       params: Array.from(new Set([...productData.map(product => product.VRAM)])).sort((a, b) => a - b),
     },
     {
       filter: 'Memory Type',
+      filterProp: 'memoryType',
       params: Array.from(new Set([...productData.map(product => product.memoryType)])),
     },
     {
       filter: 'Fan Count',
+      filterProp: 'fanCount',
       params: Array.from(new Set([...productData.map(product => product.fanCount)])).sort((a, b) => a - b),
     },
   ]
@@ -39,7 +44,7 @@ const Shop = () => {
       <div className="flex justify-between items-stretch gap-x-3 bg-gray-300 p-2">
         <div className="filters w-[17dvw] flex flex-col gap-y-3">
           {
-            filterParams?.map(item => <FilterSec key={item.filter} filterparamsArr={item.params} filterBy={item.filter}/>)
+            filterParams?.map(item => <FilterSec key={item.filterProp} filterparamsArr={item.params} filterBy={item.filter} filterProp={item.filterProp}/>)
           }
         </div>
         <div className="productGrid w-[83dvw] flex flex-wrap justify-between gap-3">
