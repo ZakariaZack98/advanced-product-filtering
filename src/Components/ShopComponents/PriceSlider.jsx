@@ -7,6 +7,7 @@ const PriceSlider = ({ filteredData, setFilteredData }) => {
   const [minValue, setMinValue] = useState(129); 
   const [maxValue, setMaxValue] = useState(1899); 
   const maxRange = 1899; 
+  const minRange = 129;
   const {productData} = useContext(ProductDataContext);
 
   const updateFilteredData = (newMinValue, newMaxValue) => {

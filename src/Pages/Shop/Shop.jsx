@@ -5,6 +5,7 @@ import { UserFilterContext } from '../../contexts/UserFilterContext'
 import SortBar from '../../Components/ShopComponents/SortBar'
 import Heading from '../../Components/ShopComponents/Heading'
 import FilterSidebar from '../../Components/ShopComponents/FilterSidebar'
+import Directory from '../../Components/common/Directory'
 
 const Shop = () => {
   const {productData} = useContext(ProductDataContext);
@@ -57,6 +58,7 @@ const Shop = () => {
 
   return (
     <div className='font-roboto'>
+      <Directory/>
       <Heading/>
       <SortBar filteredData={filteredData} setFilteredData={setFilteredData}/>
       <div className="flex justify-between items-start gap-x-3 bg-gray-300 p-2">
