@@ -12,6 +12,14 @@ const Shop = () => {
   const [filteredData, setFilteredData] = useState([]);
   const {userFilter} = useContext(UserFilterContext);
 
+
+  /**
+   * TODO: EXTRACTING POSSIBE FILTERING FACTORS FROM PRODUCT DATA STORING INSIDE AN OBJECT (filterParams)
+   * filter: Filter Title
+   * filterProp: The property which will be checked between user provided filltering data and product data
+   * params: The filtering factors varaiations (ie, chipset, vram ammount, brand ...)
+   */ 
+  
   const filterParams = [
     {
       filter: 'Chipset',
@@ -40,6 +48,10 @@ const Shop = () => {
     },
   ]
 
+
+  /**
+   * TODO: FILTER & SHOW PRODUCT BASED ON USER PROVIDED FILTERING (userFilter)
+   * */ 
   useEffect(() => {
     if (productData.length === 0) return; 
 
@@ -52,6 +64,7 @@ const Shop = () => {
     setFilteredData(updatedFilteredData);
   }, [userFilter, productData]);
 
+  //TODO: INITIATING DISPLAYING THE PRODUCT ON FIRST TIME LOAD WHEN NO FILTER IS APPLIED YET
   useEffect(() => {
     setFilteredData(productData); 
   }, [productData]);
