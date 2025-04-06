@@ -70,7 +70,7 @@ const Shop = () => {
   }, [productData]);
 
   return (
-    <div className='font-roboto'>
+    <div className='font-roboto relative'>
       <Directory/>
       <Heading/>
       <SortBar filteredData={filteredData} setFilteredData={setFilteredData}/>

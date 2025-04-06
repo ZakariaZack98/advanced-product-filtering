@@ -3,7 +3,7 @@
 import React, { useState, useContext } from 'react';
 import { ProductDataContext } from '../../contexts/ProductDataContext';
 
-const PriceSlider = ({ filteredData, setFilteredData }) => {
+const PriceSlider = ({ _, setFilteredData }) => {
   const [minValue, setMinValue] = useState(129); 
   const [maxValue, setMaxValue] = useState(1899); 
   const maxRange = 1899; 
